@@ -25,8 +25,37 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- GSAP Animation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+    <!-- Anime.js for advanced animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <!-- Particles.js for particle effects -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <!-- AOS - Animate On Scroll -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Lottie for animated graphics -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <!-- Typed.js for typing animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+    <!-- Tilt.js for 3D tilt effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
 </head>
 <body>
+    <!-- 3D Dragon Canvas -->
+    <canvas id="dragon-canvas"></canvas>
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+    <!-- Animated Background Elements -->
+    <div class="animated-bg-elements">
+        <div class="bg-orb orb-1"></div>
+        <div class="bg-orb orb-2"></div>
+        <div class="bg-orb orb-3"></div>
+    </div>
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="container">
@@ -59,8 +88,8 @@
         <div class="container">
             <div class="hero-content">
                 <h1 class="hero-title">
-                    Smarter Systems. Less Work.
-                    <span class="gradient-text">Faster Growth.</span>
+                    <span id="typed-text"></span>
+                    <span class="gradient-text" id="typed-gradient"></span>
                 </h1>
                 <p class="hero-subtitle">
                     We build digital foundations businesses can actually rely on. Full-stack digital presence, automation, and AI solutions that work behind the scenes.
