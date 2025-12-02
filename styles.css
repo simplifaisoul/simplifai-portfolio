@@ -69,6 +69,128 @@ body::after {
     animation: dragonPulse 20s ease-in-out infinite;
 }
 
+/* 3D Dragon Canvas */
+#dragon-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+    opacity: 0.8;
+}
+
+/* Particles.js Container */
+#particles-js {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.6;
+}
+
+/* Animated Background Orbs */
+.animated-bg-elements {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.bg-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.3;
+    animation: orbFloat 20s ease-in-out infinite;
+}
+
+.orb-1 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(147, 51, 234, 0.8) 0%, transparent 70%);
+    top: 10%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.orb-2 {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(126, 34, 206, 0.8) 0%, transparent 70%);
+    top: 60%;
+    right: 15%;
+    animation-delay: 5s;
+}
+
+.orb-3 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.6) 0%, transparent 70%);
+    bottom: 10%;
+    left: 50%;
+    animation-delay: 10s;
+}
+
+@keyframes orbFloat {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    33% {
+        transform: translate(50px, -50px) scale(1.1);
+    }
+    66% {
+        transform: translate(-30px, 30px) scale(0.9);
+    }
+}
+
+/* Particle Effects */
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(147, 51, 234, 0.8);
+    animation: floatParticle 15s infinite;
+}
+
+@keyframes floatParticle {
+    0% {
+        transform: translateY(100vh) translateX(0) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) translateX(100px) scale(1);
+        opacity: 0;
+    }
+}
+
 @keyframes dragonPulse {
     0%, 100% { opacity: 0.5; transform: scale(1); }
     50% { opacity: 0.8; transform: scale(1.05); }
@@ -217,7 +339,7 @@ body::after {
     content: '🐉';
     position: absolute;
     font-size: 30rem;
-    opacity: 0.03;
+    opacity: 0.02;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) rotate(-15deg);
@@ -1019,6 +1141,24 @@ section {
     padding-top: 2rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     color: rgba(255, 255, 255, 0.7);
+}
+
+/* Enhanced animations */
+.service-card,
+.portfolio-item {
+    will-change: transform;
+}
+
+.service-icon {
+    will-change: transform;
+    transition: transform 0.3s ease;
+}
+
+/* Dragon canvas responsive */
+@media (max-width: 768px) {
+    #dragon-canvas {
+        opacity: 0.5;
+    }
 }
 
 /* Responsive Design */
