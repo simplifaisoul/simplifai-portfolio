@@ -896,22 +896,22 @@ document.querySelectorAll('.btn').forEach(btn => {
     });
 });
 
-// Portfolio image zoom on hover
-document.querySelectorAll('.portfolio-image img').forEach(img => {
-    img.addEventListener('mouseenter', () => {
+// Portfolio visual animations
+document.querySelectorAll('.website-preview').forEach(preview => {
+    preview.addEventListener('mouseenter', () => {
         anime({
-            targets: img,
-            scale: 1.2,
-            duration: 600,
+            targets: preview,
+            scale: 1.02,
+            duration: 400,
             easing: 'easeOutExpo'
         });
     });
     
-    img.addEventListener('mouseleave', () => {
+    preview.addEventListener('mouseleave', () => {
         anime({
-            targets: img,
+            targets: preview,
             scale: 1,
-            duration: 600,
+            duration: 400,
             easing: 'easeOutExpo'
         });
     });
