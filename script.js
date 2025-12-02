@@ -116,7 +116,8 @@ scrollToTopBtn.style.cssText = `
     right: 2rem;
     width: 50px;
     height: 50px;
-    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+    background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%);
+    box-shadow: 0 0 20px rgba(147, 51, 234, 0.5);
     color: white;
     border: none;
     border-radius: 50%;
@@ -124,7 +125,6 @@ scrollToTopBtn.style.cssText = `
     display: none;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     z-index: 999;
     transition: all 0.3s ease;
 `;
@@ -230,5 +230,5 @@ window.addEventListener('scroll', () => {
 });
 
 // Console message
-console.log('%cSimplifAI-1 Portfolio', 'color: #2563eb; font-size: 20px; font-weight: bold;');
-console.log('%cTransforming business through AI & Automation', 'color: #6b7280; font-size: 14px;');
+console.log('%cSimplifAI-1 Portfolio', 'color: #9333ea; font-size: 20px; font-weight: bold;');
+console.log('%cTransforming business through AI & Automation', 'color: #c084fc; font-size: 14px;');
