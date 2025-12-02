@@ -44,8 +44,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
     <!-- Tilt.js for 3D tilt effects -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+    <!-- XTerm.js for Linux Terminal -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.css">
+    <script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.js"></script>
 </head>
 <body>
+    <!-- 3D Hero Canvas -->
+    <canvas id="hero-3d-canvas"></canvas>
     <!-- 3D Dragon Canvas -->
     <canvas id="dragon-canvas"></canvas>
     <!-- Particles Background -->
@@ -55,6 +61,14 @@
         <div class="bg-orb orb-1"></div>
         <div class="bg-orb orb-2"></div>
         <div class="bg-orb orb-3"></div>
+    </div>
+    <!-- Floating 3D Elements -->
+    <div class="floating-3d-elements">
+        <div class="floating-cube cube-1"></div>
+        <div class="floating-cube cube-2"></div>
+        <div class="floating-cube cube-3"></div>
+        <div class="floating-sphere sphere-1"></div>
+        <div class="floating-sphere sphere-2"></div>
     </div>
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
@@ -66,6 +80,8 @@
                 <ul class="nav-menu" id="navMenu">
                     <li><a href="#home" class="nav-link">Home</a></li>
                     <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#tech-stack" class="nav-link">Tech Stack</a></li>
+                    <li><a href="#vm-hosting" class="nav-link">VM Hosting</a></li>
                     <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
                     <li><a href="#services" class="nav-link">Services</a></li>
                     <li><a href="#careers" class="nav-link">Careers</a></li>
@@ -80,28 +96,479 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section - Redesigned with 3D -->
     <section id="home" class="hero">
         <div class="hero-background">
             <div class="gradient-overlay"></div>
+            <div class="hero-grid-pattern"></div>
         </div>
         <div class="container">
             <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="badge-text">Enterprise AI Solutions</span>
+                    <div class="badge-glow"></div>
+                </div>
                 <h1 class="hero-title">
-                    <span id="typed-text"></span>
-                    <span class="gradient-text" id="typed-gradient"></span>
+                    <span class="title-line-1" id="typed-text">Smarter Systems.</span>
+                    <span class="title-line-2 gradient-text" id="typed-gradient">Less Work.</span>
+                    <span class="title-line-3">Faster Growth.</span>
                 </h1>
                 <p class="hero-subtitle">
                     We build digital foundations businesses can actually rely on. Full-stack digital presence, automation, and AI solutions that work behind the scenes.
                 </p>
-                    <div class="hero-buttons">
-                    <a href="#portfolio" class="btn btn-primary">View Our Work</a>
-                    <a href="https://calendly.com/soulsimplifai" target="_blank" class="btn btn-secondary">Free Consultation</a>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="stat-value" data-target="50">0</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="stat-value" data-target="30">0</div>
+                        <div class="stat-label">Clients</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="stat-value" data-target="100">0</div>
+                        <div class="stat-label">% Satisfaction</div>
+                    </div>
+                </div>
+                <div class="hero-buttons">
+                    <a href="#portfolio" class="btn btn-primary btn-hero">
+                        <span>View Our Work</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="https://calendly.com/soulsimplifai" target="_blank" class="btn btn-secondary btn-hero">
+                        <span>Free Consultation</span>
+                        <i class="fas fa-calendar"></i>
+                    </a>
                 </div>
             </div>
         </div>
         <div class="scroll-indicator">
-            <i class="fas fa-chevron-down"></i>
+            <div class="scroll-mouse">
+                <div class="scroll-wheel"></div>
+            </div>
+            <span>Scroll to explore</span>
+        </div>
+        <!-- 3D Floating Tech Icons -->
+        <div class="hero-tech-icons">
+            <div class="tech-icon-float" data-icon="docker">
+                <i class="fab fa-docker"></i>
+            </div>
+            <div class="tech-icon-float" data-icon="kubernetes">
+                <i class="fas fa-cube"></i>
+            </div>
+            <div class="tech-icon-float" data-icon="linux">
+                <i class="fab fa-linux"></i>
+            </div>
+            <div class="tech-icon-float" data-icon="aws">
+                <i class="fab fa-aws"></i>
+            </div>
+            <div class="tech-icon-float" data-icon="python">
+                <i class="fab fa-python"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Deep Dive Section -->
+    <section id="tech-stack" class="tech-stack-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Technology Stack</h2>
+                <p class="section-subtitle">Deep dive into the technologies powering our solutions</p>
+            </div>
+            <div class="tech-stack-content">
+                <div class="tech-category">
+                    <div class="tech-category-header">
+                        <i class="fas fa-server"></i>
+                        <h3>Infrastructure & DevOps</h3>
+                    </div>
+                    <div class="tech-items-grid">
+                        <div class="tech-item-card">
+                            <div class="tech-icon-wrapper">
+                                <i class="fab fa-docker"></i>
+                            </div>
+                            <h4>Docker</h4>
+                            <p>Containerization for consistent deployments across environments</p>
+                        </div>
+                        <div class="tech-item-card">
+                            <div class="tech-icon-wrapper">
+                                <i class="fas fa-cube"></i>
+                            </div>
+                            <h4>Kubernetes</h4>
+                            <p>Orchestration and scaling of containerized applications</p>
+                        </div>
+                        <div class="tech-item-card">
+                            <div class="tech-icon-wrapper">
+                                <i class="fab fa-aws"></i>
+                            </div>
+                            <h4>AWS</h4>
+                            <p>Cloud infrastructure and services for scalable solutions</p>
+                        </div>
+                        <div class="tech-item-card">
+                            <div class="tech-icon-wrapper">
+                                <i class="fab fa-linux"></i>
+                            </div>
+                            <h4>Linux</h4>
+                            <p>Ubuntu, Debian, CentOS for robust server environments</p>
+                        </div>
+                        <div class="tech-item-card">
+                            <div class="tech-icon-wrapper">
+                                <i class="fas fa-network-wired"></i>
+                            </div>
+                            <h4>Terraform</h4>
+                            <p>Infrastructure as Code for automated provisioning</p>
+                        </div>
+                        <div class="tech-item-card">
+                            <div class="tech-icon-wrapper">
+                                <i class="fas fa-code-branch"></i>
+                            </div>
+                            <h4>CI/CD</h4>
+                            <p>GitHub Actions, GitLab CI for automated pipelines</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <div class="tech-category-header">
+                        <i class="fas fa-code"></i>
+                        <h3>Backend & APIs</h3>
+                    </div>
+                    <div class="tech-items-grid">
+                        <div class="tech-item-card">
+                            <div class="tech-icon-wrapper">
+                                <i class="fab fa-python"></i>
+                            </div>
+                            <h4>Python</h4>
+                            <p>FastAPI, Django, Flask for robust backend services</p>
+                        </div>
+                        <div class="tech-item-card">
+                            <div class="tech-icon-wrapper">
+                                <i class="fab fa-node-js"></i>
+                            </div>
+                            <h4>Node.js</h4>
+                            <p>Express, NestJS for high-performance APIs</p>
+                        </div>
+                        <div class="tech-item-card">
+                            <div class="tech-icon-wrapper">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <h4>PostgreSQL</h4>
+                            <p>Reliable relational database for complex data</p>
+                        </div>
+                        <div class="tech-item-card">
+                            <div class="tech-icon-wrapper">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <h4>MongoDB</h4>
+                            <p>NoSQL database for flexible data structures</p>
+                        </div>
+                        <div class="tech-item-card">
+                            <div class="tech-icon-wrapper">
+                                <i class="fas fa-fire"></i>
+                            </div>
+                            <h4>Redis</h4>
+                            <p>Caching and real-time data processing</p>
+                        </div>
+                        <div class="tech-item-card">
+                            <div class="tech-icon-wrapper">
+                                <i class="fas fa-plug"></i>
+                            </div>
+                            <h4>GraphQL</h4>
+                            <p>Efficient API queries and real-time subscriptions</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <div class="tech-category-header">
+                        <i class="fas fa-robot"></i>
+                        <h3>AI & Machine Learning</h3>
+                    </div>
+                    <div class="tech-items-grid">
+                        <div class="tech-item-card">
+                            <div class="tech-icon-wrapper">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h4>TensorFlow</h4>
+                            <p>Deep learning models and neural networks</p>
+                        </div>
+                        <div class="tech-item-card">
+                            <div class="tech-icon-wrapper">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h4>PyTorch</h4>
+                            <p>Research and production ML models</p>
+                        </div>
+                        <div class="tech-item-card">
+                            <div class="tech-icon-wrapper">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <h4>OpenAI API</h4>
+                            <p>GPT models for natural language processing</p>
+                        </div>
+                        <div class="tech-item-card">
+                            <div class="tech-icon-wrapper">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <h4>Computer Vision</h4>
+                            <p>OpenCV, YOLO for image processing</p>
+                        </div>
+                        <div class="tech-item-card">
+                            <div class="tech-icon-wrapper">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <h4>LangChain</h4>
+                            <p>LLM orchestration and agent frameworks</p>
+                        </div>
+                        <div class="tech-item-card">
+                            <div class="tech-icon-wrapper">
+                                <i class="fas fa-project-diagram"></i>
+                            </div>
+                            <h4>Vector DBs</h4>
+                            <p>Pinecone, Weaviate for semantic search</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <div class="tech-category-header">
+                        <i class="fas fa-globe"></i>
+                        <h3>Frontend & UI/UX</h3>
+                    </div>
+                    <div class="tech-items-grid">
+                        <div class="tech-item-card">
+                            <div class="tech-icon-wrapper">
+                                <i class="fab fa-react"></i>
+                            </div>
+                            <h4>React</h4>
+                            <p>Modern UI components and state management</p>
+                        </div>
+                        <div class="tech-item-card">
+                            <div class="tech-icon-wrapper">
+                                <i class="fab fa-vuejs"></i>
+                            </div>
+                            <h4>Vue.js</h4>
+                            <p>Progressive framework for interactive UIs</p>
+                        </div>
+                        <div class="tech-item-card">
+                            <div class="tech-icon-wrapper">
+                                <i class="fab fa-js"></i>
+                            </div>
+                            <h4>TypeScript</h4>
+                            <p>Type-safe JavaScript for large applications</p>
+                        </div>
+                        <div class="tech-item-card">
+                            <div class="tech-icon-wrapper">
+                                <i class="fas fa-paint-brush"></i>
+                            </div>
+                            <h4>Tailwind CSS</h4>
+                            <p>Utility-first CSS for rapid UI development</p>
+                        </div>
+                        <div class="tech-item-card">
+                            <div class="tech-icon-wrapper">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <h4>Next.js</h4>
+                            <p>React framework with SSR and optimization</p>
+                        </div>
+                        <div class="tech-item-card">
+                            <div class="tech-icon-wrapper">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <h4>Vite</h4>
+                            <p>Lightning-fast build tool and dev server</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Linux Terminal Preview -->
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="terminal-buttons">
+                        <span class="terminal-btn close"></span>
+                        <span class="terminal-btn minimize"></span>
+                        <span class="terminal-btn maximize"></span>
+                    </div>
+                    <div class="terminal-title">
+                        <i class="fab fa-linux"></i>
+                        <span>simplifai@production ~</span>
+                    </div>
+                </div>
+                <div id="terminal" class="terminal-body"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VM Hosting for Agents Section -->
+    <section id="vm-hosting" class="vm-hosting-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">VM Hosting for AI Agents</h2>
+                <p class="section-subtitle">Scalable, secure infrastructure for your AI automation needs</p>
+            </div>
+            <div class="vm-hosting-content">
+                <div class="vm-hosting-intro">
+                    <div class="vm-intro-text">
+                        <h3>Enterprise-Grade Virtual Machine Hosting</h3>
+                        <p>
+                            At SimplifAI-1, we provide robust VM hosting solutions specifically designed for AI agents and automation workflows. 
+                            Our infrastructure ensures your agents run reliably, scale seamlessly, and maintain optimal performance 24/7.
+                        </p>
+                        <div class="vm-features-highlight">
+                            <div class="vm-feature-badge">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>99.9% Uptime SLA</span>
+                            </div>
+                            <div class="vm-feature-badge">
+                                <i class="fas fa-rocket"></i>
+                                <span>Auto-Scaling</span>
+                            </div>
+                            <div class="vm-feature-badge">
+                                <i class="fas fa-lock"></i>
+                                <span>Enterprise Security</span>
+                            </div>
+                            <div class="vm-feature-badge">
+                                <i class="fas fa-globe"></i>
+                                <span>Global CDN</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="vm-visual">
+                        <div class="vm-architecture-diagram">
+                            <div class="vm-node" data-node="load-balancer">
+                                <i class="fas fa-balance-scale"></i>
+                                <span>Load Balancer</span>
+                            </div>
+                            <div class="vm-connection"></div>
+                            <div class="vm-cluster">
+                                <div class="vm-node" data-node="vm-1">
+                                    <i class="fas fa-server"></i>
+                                    <span>VM Agent 1</span>
+                                </div>
+                                <div class="vm-node" data-node="vm-2">
+                                    <i class="fas fa-server"></i>
+                                    <span>VM Agent 2</span>
+                                </div>
+                                <div class="vm-node" data-node="vm-3">
+                                    <i class="fas fa-server"></i>
+                                    <span>VM Agent 3</span>
+                                </div>
+                            </div>
+                            <div class="vm-connection"></div>
+                            <div class="vm-node" data-node="database">
+                                <i class="fas fa-database"></i>
+                                <span>Database Cluster</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="vm-hosting-details">
+                    <div class="vm-detail-card">
+                        <div class="vm-card-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <h4>Dedicated VM Instances</h4>
+                        <p>
+                            Isolated virtual machines with dedicated resources for your AI agents. Choose from various configurations:
+                        </p>
+                        <ul class="vm-specs">
+                            <li><strong>Standard:</strong> 2-4 vCPU, 4-8GB RAM, 50GB SSD</li>
+                            <li><strong>Performance:</strong> 4-8 vCPU, 8-16GB RAM, 100GB SSD</li>
+                            <li><strong>Enterprise:</strong> 8-16 vCPU, 16-32GB RAM, 200GB+ SSD</li>
+                        </ul>
+                    </div>
+                    <div class="vm-detail-card">
+                        <div class="vm-card-icon">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                        <h4>Auto-Scaling & Load Balancing</h4>
+                        <p>
+                            Automatically scale your agent infrastructure based on demand. Our load balancers distribute traffic 
+                            efficiently across multiple VM instances.
+                        </p>
+                        <ul class="vm-specs">
+                            <li>Horizontal scaling based on CPU/memory metrics</li>
+                            <li>Intelligent traffic distribution</li>
+                            <li>Zero-downtime deployments</li>
+                            <li>Health checks and auto-recovery</li>
+                        </ul>
+                    </div>
+                    <div class="vm-detail-card">
+                        <div class="vm-card-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4>Security & Compliance</h4>
+                        <p>
+                            Enterprise-grade security measures to protect your agents and data:
+                        </p>
+                        <ul class="vm-specs">
+                            <li>DDoS protection and mitigation</li>
+                            <li>SSL/TLS encryption for all connections</li>
+                            <li>VPC isolation and private networking</li>
+                            <li>Regular security audits and updates</li>
+                            <li>SOC 2 Type II compliant infrastructure</li>
+                        </ul>
+                    </div>
+                    <div class="vm-detail-card">
+                        <div class="vm-card-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h4>Management & Monitoring</h4>
+                        <p>
+                            Comprehensive tools to manage and monitor your VM infrastructure:
+                        </p>
+                        <ul class="vm-specs">
+                            <li>Real-time performance monitoring</li>
+                            <li>Automated backups and snapshots</li>
+                            <li>Container orchestration (Docker/K8s)</li>
+                            <li>CI/CD pipeline integration</li>
+                            <li>24/7 technical support</li>
+                        </ul>
+                    </div>
+                    <div class="vm-detail-card">
+                        <div class="vm-card-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <h4>Network & Connectivity</h4>
+                        <p>
+                            High-speed networking optimized for AI workloads:
+                        </p>
+                        <ul class="vm-specs">
+                            <li>10 Gbps network bandwidth</li>
+                            <li>Global edge locations</li>
+                            <li>Private network peering</li>
+                            <li>Low-latency connections</li>
+                            <li>BGP routing for redundancy</li>
+                        </ul>
+                    </div>
+                    <div class="vm-detail-card">
+                        <div class="vm-card-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <h4>Flexible Pricing</h4>
+                        <p>
+                            Transparent, pay-as-you-scale pricing:
+                        </p>
+                        <ul class="vm-specs">
+                            <li>Hourly or monthly billing options</li>
+                            <li>No long-term commitments required</li>
+                            <li>Volume discounts for enterprise</li>
+                            <li>Reserved instances for cost savings</li>
+                            <li>Usage-based pricing available</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="vm-cta">
+                    <h3>Ready to Deploy Your AI Agents?</h3>
+                    <p>Get started with our VM hosting solutions today</p>
+                    <div class="vm-cta-buttons">
+                        <a href="https://calendly.com/soulsimplifai" target="_blank" class="btn btn-primary btn-large">
+                            <i class="fas fa-calendar"></i>
+                            Schedule a Consultation
+                        </a>
+                        <a href="#contact" class="btn btn-secondary btn-large">
+                            <i class="fas fa-envelope"></i>
+                            Contact Sales
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
