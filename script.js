@@ -187,6 +187,34 @@ window.addEventListener('load', () => {
     }, 100);
 });
 
+// Hero stats counter animation
+const animateHeroStats = () => {
+    const statValues = document.querySelectorAll('.stat-value');
+    
+    statValues.forEach(stat => {
+        const target = parseInt(stat.getAttribute('data-target'));
+        const obj = { value: 0 };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    gsap.to(obj, {
+                        value: target,
+                        duration: 2,
+                        ease: 'power2.out',
+                        onUpdate: () => {
+                            stat.textContent = Math.floor(obj.value);
+                        }
+                    });
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        observer.observe(stat);
+    });
+};
+
 // Stats counter animation
 const animateCounter = (element, target, duration = 2000) => {
     let start = 0;
@@ -345,15 +373,15 @@ particlesJS('particles-js', {
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
     const typedText = new Typed('#typed-text', {
-        strings: ['Smarter Systems. Less Work.'],
-        typeSpeed: 50,
+        strings: ['Smarter Systems.'],
+        typeSpeed: 80,
         showCursor: false,
         onComplete: () => {
             const typedGradient = new Typed('#typed-gradient', {
-                strings: ['Faster Growth.'],
-                typeSpeed: 50,
+                strings: ['Less Work.'],
+                typeSpeed: 80,
                 showCursor: false,
-                startDelay: 500
+                startDelay: 300
             });
         }
     });
@@ -599,6 +627,145 @@ if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initDragon);
 } else {
     initDragon();
+}
+
+// ============================================
+// ENHANCED 3D HERO SCENE
+// ============================================
+let heroScene, heroCamera, heroRenderer, heroObjects = [];
+
+function initHero3D() {
+    const canvas = document.getElementById('hero-3d-canvas');
+    if (!canvas) return;
+
+    // Scene setup
+    heroScene = new THREE.Scene();
+    heroCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    heroRenderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+    heroRenderer.setSize(window.innerWidth, window.innerHeight);
+    heroRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // Create floating geometric shapes
+    const geometryTypes = [
+        () => new THREE.BoxGeometry(0.5, 0.5, 0.5),
+        () => new THREE.SphereGeometry(0.3, 16, 16),
+        () => new THREE.TorusGeometry(0.3, 0.1, 16, 100),
+        () => new THREE.OctahedronGeometry(0.3)
+    ];
+
+    const material = new THREE.MeshPhongMaterial({
+        color: 0x9333ea,
+        emissive: 0x7e22ce,
+        emissiveIntensity: 0.5,
+        transparent: true,
+        opacity: 0.6,
+        shininess: 100
+    });
+
+    // Create multiple floating objects
+    for (let i = 0; i < 15; i++) {
+        const geometryType = geometryTypes[Math.floor(Math.random() * geometryTypes.length)];
+        const geometry = geometryType();
+        const mesh = new THREE.Mesh(geometry, material.clone());
+        
+        mesh.position.set(
+            (Math.random() - 0.5) * 20,
+            (Math.random() - 0.5) * 20,
+            (Math.random() - 0.5) * 20
+        );
+        
+        mesh.rotation.set(
+            Math.random() * Math.PI,
+            Math.random() * Math.PI,
+            Math.random() * Math.PI
+        );
+        
+        mesh.userData = {
+            speed: 0.5 + Math.random() * 0.5,
+            rotationSpeed: {
+                x: (Math.random() - 0.5) * 0.02,
+                y: (Math.random() - 0.5) * 0.02,
+                z: (Math.random() - 0.5) * 0.02
+            }
+        };
+        
+        heroObjects.push(mesh);
+        heroScene.add(mesh);
+    }
+
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0x9333ea, 0.3);
+    heroScene.add(ambientLight);
+
+    const pointLight1 = new THREE.PointLight(0x9333ea, 1, 100);
+    pointLight1.position.set(10, 10, 10);
+    heroScene.add(pointLight1);
+
+    const pointLight2 = new THREE.PointLight(0x7e22ce, 0.8, 100);
+    pointLight2.position.set(-10, -10, 10);
+    heroScene.add(pointLight2);
+
+    // Camera position
+    heroCamera.position.z = 15;
+    heroCamera.position.y = 2;
+
+    // Animation loop
+    function animate() {
+        requestAnimationFrame(animate);
+
+        const time = Date.now() * 0.001;
+
+        heroObjects.forEach((obj, index) => {
+            // Floating animation
+            obj.position.y += Math.sin(time + index) * 0.01;
+            obj.position.x += Math.cos(time * 0.5 + index) * 0.01;
+            
+            // Rotation
+            obj.rotation.x += obj.userData.rotationSpeed.x;
+            obj.rotation.y += obj.userData.rotationSpeed.y;
+            obj.rotation.z += obj.userData.rotationSpeed.z;
+            
+            // Pulsing glow
+            const pulse = 1 + Math.sin(time * 2 + index) * 0.2;
+            obj.scale.set(pulse, pulse, pulse);
+        });
+
+        // Camera movement based on mouse
+        const mouseX = (window.innerWidth / 2 - window.innerWidth / 2) * 0.0005;
+        const mouseY = (window.innerHeight / 2 - window.innerHeight / 2) * 0.0005;
+        heroCamera.position.x += (mouseX - heroCamera.position.x) * 0.05;
+        heroCamera.position.y += (mouseY - heroCamera.position.y) * 0.05;
+        heroCamera.lookAt(heroScene.position);
+
+        heroRenderer.render(heroScene, heroCamera);
+    }
+
+    animate();
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        heroCamera.aspect = window.innerWidth / window.innerHeight;
+        heroCamera.updateProjectionMatrix();
+        heroRenderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // Mouse interaction
+    let mouseX = 0, mouseY = 0;
+    document.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+        mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+    });
+}
+
+// Initialize hero 3D scene
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        initHero3D();
+        animateHeroStats();
+    });
+} else {
+    initHero3D();
+    animateHeroStats();
 }
 
 // ============================================
@@ -1040,5 +1207,111 @@ window.addEventListener('scroll', () => {
         });
         
         particleIndex++;
+    }
+});
+
+// ============================================
+// XTERM.JS LINUX TERMINAL
+// ============================================
+document.addEventListener('DOMContentLoaded', () => {
+    const terminalElement = document.getElementById('terminal');
+    if (terminalElement) {
+        const term = new Terminal({
+            cursorBlink: true,
+            fontFamily: '"Cascadia Code", "Fira Code", monospace',
+            fontSize: 14,
+            theme: {
+                background: '#0a0a0a',
+                foreground: '#d1d5db',
+                cursor: '#9333ea',
+                selectionBackground: 'rgba(147, 51, 234, 0.3)',
+                black: '#000000',
+                red: '#ef4444',
+                green: '#22c55e',
+                yellow: '#eab308',
+                blue: '#3b82f6',
+                magenta: '#a855f7',
+                cyan: '#06b6d4',
+                white: '#ffffff',
+                brightBlack: '#1f2937',
+                brightRed: '#f87171',
+                brightGreen: '#4ade80',
+                brightYellow: '#facc15',
+                brightBlue: '#60a5fa',
+                brightMagenta: '#c084fc',
+                brightCyan: '#22d3ee',
+                brightWhite: '#f9fafb'
+            }
+        });
+        const fitAddon = new FitAddon.FitAddon();
+        term.loadAddon(fitAddon);
+        term.open(terminalElement);
+        fitAddon.fit();
+
+        window.addEventListener('resize', () => {
+            fitAddon.fit();
+        });
+
+        let line = '';
+        const prompt = 'simplifai@production ~ $ ';
+
+        term.write(prompt);
+
+        term.onKey(({ key, domEvent }) => {
+            const printable = !domEvent.altKey && !domEvent.ctrlKey && !domEvent.metaKey && !domEvent.shiftKey;
+
+            if (domEvent.keyCode === 13) { // Enter key
+                term.write('\r\n');
+                handleCommand(line);
+                line = '';
+                term.write(prompt);
+            } else if (domEvent.keyCode === 8) { // Backspace
+                if (line.length > 0) {
+                    term.write('\b \b');
+                    line = line.slice(0, -1);
+                }
+            } else if (printable) {
+                line += key;
+                term.write(key);
+            }
+        });
+
+        const handleCommand = (command) => {
+            switch (command.trim()) {
+                case 'help':
+                    term.write('Available commands:\r\n');
+                    term.write('  ls - List files\r\n');
+                    term.write('  cat about.txt - Read about SimplifAI-1\r\n');
+                    term.write('  tech-stack - View our core technologies\r\n');
+                    term.write('  vm-info - Learn about VM hosting\r\n');
+                    term.write('  clear - Clear the terminal\r\n');
+                    break;
+                case 'ls':
+                    term.write('index.html  styles.css  script.js  about.txt  tech_stack.json  vm_config.yaml\r\n');
+                    break;
+                case 'cat about.txt':
+                    term.write('SimplifAI-1: Smarter Systems. Less Work. Faster Growth.\r\n');
+                    term.write('We build digital foundations businesses can actually rely on. Full-stack digital presence, automation, and AI solutions that work behind the scenes.\r\n');
+                    break;
+                case 'tech-stack':
+                    term.write('Core Technologies:\r\n');
+                    term.write('  Infrastructure: Docker, Kubernetes, AWS, Linux, Terraform\r\n');
+                    term.write('  Backend: Python (FastAPI), Node.js (Express), PostgreSQL, MongoDB\r\n');
+                    term.write('  AI/ML: TensorFlow, PyTorch, OpenAI API, LangChain\r\n');
+                    term.write('  Frontend: React, Vue.js, TypeScript, Tailwind CSS, Next.js, Vite\r\n');
+                    break;
+                case 'vm-info':
+                    term.write('VM Hosting for AI Agents:\r\n');
+                    term.write('  Dedicated instances with auto-scaling, load balancing, and enterprise security.\r\n');
+                    term.write('  Configurations: Standard (2-4 vCPU), Performance (4-8 vCPU), Enterprise (8-16 vCPU).\r\n');
+                    term.write('  Features: 99.9% Uptime, DDoS Protection, 24/7 Support.\r\n');
+                    break;
+                case 'clear':
+                    term.clear();
+                    break;
+                default:
+                    term.write(`Command not found: ${command}\r\n`);
+            }
+        };
     }
 });
